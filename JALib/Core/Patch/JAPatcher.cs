@@ -277,7 +277,7 @@ public class JAPatcher : IDisposable {
                 break;
             }
         }
-        if(!usingWaiting) RunWaiterPatchForce();
+        if(!usingWaiting || !addedPatchWaiter && !MainThread.IsMainThread()) RunWaiterPatchForce(false);
         else if(addedPatchWaiter) RunWaiterPatch();
     }
 
@@ -606,7 +606,7 @@ public class JAPatcher : IDisposable {
         jaInternalPatchInfo.AddOverridePatches(new OverridePatchData(patchMethod, attribute, mod));
     }
 
-    public static void RunWaiterPatchForce() {
+    public static void RunWaiterPatchForce(bool setNull) {
         if(_patchWaiter == null) return;
         try {
             PatchWaiter patchWaiter = _patchWaiter;
@@ -660,7 +660,7 @@ public class JAPatcher : IDisposable {
                         }
                     }
                 }
-                _patchWaiter = null;
+                _patchWaiter = setNull ? null : new PatchWaiter();
                 ReversePatchData[] reversePatches = patchWaiter.ReversePatches.ToArray();
                 for(int i = 0; i < reversePatches.Length; i++) {
                     ReversePatchData data = reversePatches[i];
@@ -699,7 +699,7 @@ public class JAPatcher : IDisposable {
             MainThread.ForceQueue(JALib.Instance, RunWaiterPatch);
             return;
         }
-        RunWaiterPatchForce();
+        RunWaiterPatchForce(true);
     }
 
     private static (PatchInfo, JAInternalPatchInfo) ClonePatch(PatchInfo patchInfo, JAInternalPatchInfo jaInternalPatchInfo) {
