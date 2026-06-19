@@ -25,7 +25,7 @@ public class JAction(JAMod mod, Action action) {
     public override bool Equals(object obj) => this.action.Equals(obj is JAction ac ? ac.action : obj);
     public override int GetHashCode() => action.GetHashCode();
     public override string ToString() => action.ToString();
-    public static bool operator ==(JAction a, JAction b) => a != null && b != null && a.action == b.action;
+    public static bool operator ==(JAction a, JAction b) => (object) a == b || (object) a != null && (object) b != null && a.action == b.action;
     public static bool operator !=(JAction a, JAction b) => !(a == b);
     public static implicit operator JAction(Action action) => new(null, action);
 }
