@@ -98,7 +98,7 @@ public abstract class JAMod {
                 try {
                     Assembly assembly = modEntry.Assembly;
                     if(assembly.GetName().Name == "JAMod.Bootstrap") {
-                        if(assembly.GetName().Version < new Version(1, 0, 0, 3)) {
+                        if(assembly.GetName().Version < new Version(1, 0, 0, 5)) {
                             Log("JAMod.Bootstrap version is outdated. Updating...");
                             File.Copy(System.IO.Path.Combine(JALib.Instance.Path, "JAMod.Bootstrap.dll"),
                                 System.IO.Path.Combine(modEntry.Path, modEntry.Info.AssemblyName), true);
