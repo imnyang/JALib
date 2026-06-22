@@ -1,6 +1,6 @@
 # JALib
 ### Jongyeol Adofai Library
-![C#](https://img.shields.io/badge/Lang-Csharp-c9c8e4.svg?&logo=csharp)
+![C#](https://img.shields.io/badge/Lang-Csharp-c9c8e4.svg?&logo=c#)
 ![Rider](https://img.shields.io/badge/IDE-Rider-c9c8e4.svg?&logo=rider)
 ![Download](https://img.shields.io/github/downloads/Jongye0l/JALib/JALib.zip)
 
@@ -56,6 +56,10 @@
 ### 참고한 코드 Reference code
 * [Overlayer](https://github.com/c3nb/Overlayer/tree/2cdf95b13add797f9c274d5766786c24c54adb9f)
 * [AdofaiTweaks](https://github.com/PizzaLovers007/AdofaiTweaks)
+---
+### 라이선스 License
+이 프로젝트는 **BSD 3-Clause License**를 따릅니다. 자세한 내용은 [LICENSE](./LICENSE) 파일을 참고해 주세요.
+
 ---
 ### 개발 환경 Development environment
 * Windows 11
