@@ -66,11 +66,12 @@
 * Rider 2026.1.3
 * .NET Framework 4.8.1
 * C# 13
-* A Dance of Fire and Ice 3.1.2(r143, 9cbda54)
+* A Dance of Fire and Ice 3.2.0(r145, 66953d0)
 ---
 ### 테스트 환경 Test environment
 * Windows 11
 * A Dance of Fire and Ice 2.9.8(r136, 41f0b77)
 * A Dance of Fire and Ice 3.1.2(r143, 9cbda54)
+* A Dance of Fire and Ice 3.2.0(r145, 66953d0)
 ---
 # [Join My Discord!](https://discord.jongyeol.kr)
