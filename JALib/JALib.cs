@@ -221,6 +221,8 @@ sealed class JALib : JAMod {
     protected override void OnGUI() {
         SettingGUI settingGUI = _settingGUI;
         JALocalization localization = Instance.Localization;
+        DrawAutoUpdateSettings(localization);
+        GUILayout.Space(10);
         settingGUI.AddSettingToggle(ref Setting.logPatches, localization["Setting.LogPatches"]);
         settingGUI.AddSettingToggle(ref Setting.logPrefixWarn, localization["Setting.LogPrefixWarn"]);
         settingGUI.AddSettingToggle(ref Setting.LogApiRequests, localization["Setting.LogApiRequests"]);
@@ -242,6 +244,38 @@ sealed class JALib : JAMod {
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
     }
+
+    private void DrawAutoUpdateSettings(JALocalization localization) {
+        GUILayout.Label(Localize(localization, "AutoUpdate.Title", "JALib 모드 자동 업데이트", "JALib mod automatic updates"));
+        _settingGUI.AddSettingToggle(ref Setting.autoUpdateNewMods,
+            Localize(localization, "AutoUpdate.Default", "새 JALib 모드 자동 업데이트", "Automatically update new JALib mods"));
+
+        foreach(JAMod mod in JAMod.GetMods().Where(mod => mod != this).OrderBy(mod => mod.Name)) {
+            bool hasOverride = Setting.autoUpdateMods.TryGetValue(mod.Name, out bool enabled);
+            bool autoUpdate = hasOverride ? enabled : Setting.autoUpdateNewMods;
+            string label = mod.Name + " (" + mod.Version + ")" +
+                           (hasOverride ? "" : " " + Localize(localization, "AutoUpdate.UsingDefault", "[기본값 사용]", "[using default]"));
+
+            GUILayout.BeginHorizontal();
+            bool result = GUILayout.Toggle(autoUpdate, label);
+            if(result != autoUpdate) {
+                Setting.autoUpdateMods[mod.Name] = result;
+                SaveSetting();
+            }
+            if(hasOverride && GUILayout.Button(Localize(localization, "AutoUpdate.Reset", "기본값", "Default"), GUILayout.Width(80))) {
+                Setting.autoUpdateMods.Remove(mod.Name);
+                SaveSetting();
+            }
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+        }
+    }
+
+    internal bool IsAutoUpdateEnabled(string modName) =>
+        Setting.autoUpdateMods.TryGetValue(modName, out bool enabled) ? enabled : Setting.autoUpdateNewMods;
+
+    private static string Localize(JALocalization localization, string key, string korean, string english) =>
+        localization.TryGet(key, out string value) ? value : RDString.language == SystemLanguage.Korean ? korean : english;
     
     private static string Bold(string text, bool bold) => bold ? "<b>" + text + "</b>" : text;
 }

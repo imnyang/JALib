@@ -50,7 +50,10 @@ class RawModData {
                     if(apiInfo.Success) {
                         bool notLatest = (setting.Beta ? apiInfo.LatestBetaVersion : apiInfo.LatestVersion) > info.ModEntry.Version;
                         modInfo.Version = (notLatest ? "<color=red>" : "<color=cyan>") + modInfo.Version + "</color>";
-                        if(apiInfo.RequestedVersion != null) data.DownloadRequest(apiInfo.RequestedVersion);
+                        if(apiInfo.RequestedVersion != null) {
+                            if(JALib.Instance.IsAutoUpdateEnabled(name)) data.DownloadRequest(apiInfo.RequestedVersion);
+                            else info.ModEntry.Logger.Log("Automatic update is disabled in JALib settings.");
+                        }
                     }
                 }
             checkUpdated = true;
